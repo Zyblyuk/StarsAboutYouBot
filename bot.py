@@ -262,9 +262,11 @@ def character_Other(message, URL):
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     global List
-    if call.message.chat.id in List.temp_list:
+    if call.message.chat.id in List.temp_list and call.data in List.temp_list:
         string = "<b>"+call.data+"</b>" + ":\n<em>" + List.temp_list[call.message.chat.id][call.data] + "</em>"
         bot.send_message(call.message.chat.id, string, parse_mode = 'html')
+    elif not call.data in List.temp_list:
+        bot.send_message(call.message.chat.id, "Вы неправильно ввели данные, к примеру указали дату рождения 31 февраля или другою не существующую дату.")
     else:
         bot.send_message(call.message.chat.id, "Выполните комманду /result")
 
