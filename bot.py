@@ -9,7 +9,6 @@ from save_and_load import Users
 bot = telebot.TeleBot(token)
 isRunning_Other = False
 List = Users("DataBase")
-print(List.Users)
 
 
 @bot.message_handler(commands=['help'])
@@ -266,8 +265,9 @@ def callback_worker(call):
     if call.message.chat.id in List.temp_list and call.data in List.temp_list[call.message.chat.id]:
         string = "<b>"+call.data+"</b>" + ":\n<em>" + List.temp_list[call.message.chat.id][call.data] + "</em>"
         bot.send_message(call.message.chat.id, string, parse_mode = 'html')
-    elif not call.data in List.temp_list[call.message.chat.id]:
-        bot.send_message(call.message.chat.id, "Вы неправильно ввели данные, к примеру указали дату рождения 31 февраля или другою не существующую дату.")
+    elif call.message.chat.id in List.temp_list:
+        if not call.data in List.temp_list[call.message.chat.id]:
+            bot.send_message(call.message.chat.id, "Вы неправильно ввели данные, к примеру указали дату рождения 31 февраля или другою не существующую дату.")
     else:
         bot.send_message(call.message.chat.id, "Выполните комманду /result")
 
