@@ -9,6 +9,7 @@ from save_and_load import Users
 bot = telebot.TeleBot(token)
 isRunning_Other = False
 List = Users("DataBase")
+print(List.Users)
 
 
 @bot.message_handler(commands=['help'])
